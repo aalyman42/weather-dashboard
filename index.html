@@ -21,7 +21,10 @@
     <div class="container text-center">
       <div class="row">
         <div class="col-12 col-lg-4">
-          <form class="row row-cols-lg-auto g-3 align-items-center">
+          <form
+            class="row row-cols-lg-auto g-3 align-items-center"
+            id="search-form"
+          >
             <div class="col-12">
               <label class="visually-hidden" for="inlineFormInputGroupUsername"
                 >Username</label
@@ -43,13 +46,10 @@
         </div>
         <div class="col-12 col-lg-8">
           <div class="card">
-            <h5 class="card-header">Featured</h5>
+            <h5 class="card-header" id="city-name"></h5>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
+              <h5 class="card-title" id="today's date"></h5>
+              <ul class="card-text" id="conditions"></ul>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
