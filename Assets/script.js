@@ -1,4 +1,6 @@
 var searchField = document.getElementById("inlineFormInputGroupUsername");
+var searchBtn = document.getElementById("search");
+var ulBtn = document.getElementById("city-btn");
 var geocode =
   "https://api.openweathermap.org/data/2.5/weather?q=" +
   citySearch +
@@ -14,6 +16,8 @@ var formattedDate = today.format("MMM DD, YYYY");
 var todayDateEl = document.getElementById("todayDate");
 var long = "";
 var lat = "";
+var citySave = JSON.parse(localStorage.getItem("city")) || [];
+
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
   conditions.textContent = "";
@@ -59,5 +63,12 @@ searchForm.addEventListener("submit", function (event) {
         .then(function (data) {
           console.log(data);
         });
+
+      citySave.push(citySearch);
+      console.log(citySave);
+      localStorage.setItem("city", JSON.stringify(citySave));
+      // var cityLi = document.createElement("li");
+      // var cityBtn = document.createElement("button");
     });
 });
+function showCity() {}
