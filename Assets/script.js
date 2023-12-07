@@ -4,7 +4,7 @@ var geocode =
   citySearch +
   "&appid=68c2e84e6eaae16993d990cb419c8eb3&units=imperial";
 console.log(geocode);
-
+var card = document.getElementById("card");
 var citySearch = searchField.value;
 var searchForm = document.getElementById("search-form");
 console.log(citySearch);
@@ -58,6 +58,27 @@ searchForm.addEventListener("submit", function (event) {
         })
         .then(function (data) {
           console.log(data);
+          for (i = 5; i < data.list.length; i += 8) {
+            var fiveDayCard = document.createElement("div");
+            fiveDayCard.classList.add(
+              "card",
+              "col-12",
+              "col-md-6",
+              "col-lg-3",
+              "m-3",
+              "rounded"
+            );
+            var cardBody = document.createElement("div");
+            cardBody.appendChild(fiveDayCard);
+            var title = document.createElement("h3");
+            title.textContent = data.list[i].dt_txt;
+            fiveDayCard.appendChild(title);
+            card.appendChild(cardBody);
+            var pEl = document.createElement("p");
+            pEl.textContent = data.list[i].main.temp + "°F";
+
+            fiveDayCard.appendChild(pEl);
+          }
         });
     });
 });
