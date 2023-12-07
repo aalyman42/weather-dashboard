@@ -16,7 +16,7 @@ var long = "";
 var lat = "";
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
-  conditions.text = "";
+  conditions.textContent = "";
   todayDateEl.textContent = formattedDate;
   citySearch = searchField.value;
   geocode =
