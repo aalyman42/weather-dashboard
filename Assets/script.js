@@ -3,6 +3,8 @@ var geocode =
   "https://api.openweathermap.org/data/2.5/weather?q=" +
   citySearch +
   "&appid=68c2e84e6eaae16993d990cb419c8eb3&units=imperial";
+console.log(geocode);
+
 var citySearch = searchField.value;
 var searchForm = document.getElementById("search-form");
 console.log(citySearch);
@@ -10,10 +12,11 @@ var conditions = document.getElementById("conditions");
 var today = dayjs();
 var formattedDate = today.format("MMM DD, YYYY");
 var todayDateEl = document.getElementById("todayDate");
-
+var long = "";
+var lat = "";
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
-  conditions.innerHTML = "";
+  conditions.textContent = "";
   todayDateEl.textContent = formattedDate;
   citySearch = searchField.value;
   geocode =
@@ -28,7 +31,14 @@ searchForm.addEventListener("submit", function (event) {
     })
     .then(function (data) {
       console.log(data);
-
+      long = data.coord.lon;
+      lat = data.coord.lat;
+      var fiveDay =
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+        lat +
+        "&lon=" +
+        long +
+        "&appid=68c2e84e6eaae16993d990cb419c8eb3&units=imperial";
       var tempLi = document.createElement("li");
       var windLi = document.createElement("li");
       var humidityLi = document.createElement("li");
@@ -41,5 +51,13 @@ searchForm.addEventListener("submit", function (event) {
       conditions.appendChild(tempLi);
       conditions.appendChild(windLi);
       conditions.appendChild(humidityLi);
+
+      fetch(fiveDay)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        });
     });
 });
