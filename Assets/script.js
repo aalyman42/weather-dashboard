@@ -18,8 +18,6 @@ var long = "";
 var lat = "";
 var citySave = JSON.parse(localStorage.getItem("city")) || [];
 
-searchForm.addEventListener("submit", searchHandler);
-
 function searchHandler(event) {
   event.preventDefault();
   conditions.textContent = "";
@@ -117,7 +115,7 @@ function showCity() {
     searchEl.addEventListener("click", searchHandler);
   }
 }
-
+searchForm.addEventListener("submit", searchHandler);
 function init() {
   showCity();
 }
