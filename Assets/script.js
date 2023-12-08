@@ -56,7 +56,15 @@ function searchHandler(event) {
       var windLi = document.createElement("li");
       var humidityLi = document.createElement("li");
       var cityNameh1 = document.createElement("h1");
+      var makeIcon = document.createElement("img");
+      makeIcon.setAttribute("width", "50px");
+      makeIcon.setAttribute("height", "50px");
+      makeIcon.setAttribute(
+        "src",
+        "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
+      );
       cityNameh1.textContent = data.name;
+      todayDateEl.appendChild(makeIcon);
       tempLi.textContent = "temperature: " + data.main.temp + "°F";
       windLi.textContent = "wind speed: " + data.wind.speed + "MPH";
       humidityLi.textContent = "Humidity: " + data.main.humidity + "%";
@@ -73,7 +81,7 @@ function searchHandler(event) {
           console.log(data);
           headEl.innerHTML = "";
           var header = document.createElement("h2");
-          header.textContent = "Five Day Forcast";
+          header.textContent = "Five Day Forecast";
           headEl.appendChild(header);
           headEl.classList.add("d-flex", "justify-content-center");
           card.innerHTML = "";
@@ -87,6 +95,17 @@ function searchHandler(event) {
               "col-lg-8",
               "rounded"
             );
+            var fiveDayIcon = document.createElement("img");
+            fiveDayIcon.setAttribute(
+              "src",
+              "https://openweathermap.org/img/wn/" +
+                data.list[i].weather[0].icon +
+                "@2x.png"
+            );
+            fiveDayIcon.setAttribute("width", "40px");
+            fiveDayIcon.setAttribute("height", "40px");
+            console.log(fiveDayIcon);
+            fiveDayCard.appendChild(fiveDayIcon);
             var cardBody = document.createElement("div");
             cardBody.appendChild(fiveDayCard);
             var title = document.createElement("h3");
@@ -97,6 +116,7 @@ function searchHandler(event) {
             pEl.textContent = data.list[i].main.temp + "°F";
             fiveDayCard.appendChild(pEl);
             console.log(fiveDayCard);
+            pEl.appendChild(fiveDayIcon);
             var cardArr = [];
             cardArr.push(fiveDayCard);
             if (cardArr.length >= 5) {
