@@ -1,6 +1,6 @@
 var searchField = document.getElementById("inlineFormInputGroupUsername");
 var searchBtn = document.getElementById("search");
-var ulBtn = document.getElementById("city-btn");
+
 var geocode =
   "https://api.openweathermap.org/data/2.5/weather?q=" +
   citySearch +
@@ -18,14 +18,24 @@ var long = "";
 var lat = "";
 var citySave = JSON.parse(localStorage.getItem("city")) || [];
 
-searchForm.addEventListener("submit", function (event) {
+searchForm.addEventListener("submit", searchHandler);
+
+function searchHandler(event) {
   event.preventDefault();
   conditions.textContent = "";
   todayDateEl.textContent = formattedDate;
   citySearch = searchField.value;
+  var cityName = event.target.textContent.split(" ")[0].trim();
+
+  if (cityName === "") {
+    cityName = searchField.value;
+  } else {
+    cityName = event.target.textContent;
+  }
+  console.log(cityName);
   geocode =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
-    searchField.value +
+    cityName +
     "&appid=68c2e84e6eaae16993d990cb419c8eb3&units=imperial";
   console.log(citySearch);
   console.log(geocode);
@@ -88,8 +98,27 @@ searchForm.addEventListener("submit", function (event) {
       citySave.push(citySearch);
       console.log(citySave);
       localStorage.setItem("city", JSON.stringify(citySave));
-      // var cityLi = document.createElement("li");
-      // var cityBtn = document.createElement("button");
     });
-});
-function showCity() {}
+}
+
+var ulBtn = document.getElementById("city-btn");
+
+function showCity() {
+  var cityList = JSON.parse(localStorage.getItem("city"));
+  for (var i = 0; i < cityList.length; i++) {
+    var searchedCity = document.createElement("button");
+
+    searchedCity.textContent = cityList[i];
+    var history = "history-btn" + i;
+    searchedCity.setAttribute("id", history);
+
+    ulBtn.appendChild(searchedCity);
+    var searchEl = document.getElementById(history);
+    searchEl.addEventListener("click", searchHandler);
+  }
+}
+
+function init() {
+  showCity();
+}
+init();
