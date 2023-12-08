@@ -17,7 +17,7 @@ var todayDateEl = document.getElementById("todayDate");
 var long = "";
 var lat = "";
 var citySave = JSON.parse(localStorage.getItem("city")) || [];
-
+var headEl = document.getElementById("head");
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
   conditions.textContent = "";
@@ -62,14 +62,20 @@ searchForm.addEventListener("submit", function (event) {
         })
         .then(function (data) {
           console.log(data);
+          headEl.innerHTML = "";
+          var header = document.createElement("h2");
+          header.textContent = "Five Day Forcast";
+          headEl.appendChild(header);
+          headEl.classList.add("d-flex", "justify-content-center");
+          card.innerHTML = "";
+
           for (i = 5; i < data.list.length; i += 8) {
             var fiveDayCard = document.createElement("div");
             fiveDayCard.classList.add(
               "card",
               "col-12",
-              "col-md-6",
-              "col-lg-3",
-              "m-3",
+              "col-md-8",
+              "col-lg-8",
               "rounded"
             );
             var cardBody = document.createElement("div");
@@ -78,10 +84,15 @@ searchForm.addEventListener("submit", function (event) {
             title.textContent = data.list[i].dt_txt;
             fiveDayCard.appendChild(title);
             card.appendChild(cardBody);
-            var pEl = document.createElement("p");
+            var pEl = document.createElement("h5");
             pEl.textContent = data.list[i].main.temp + "°F";
-
             fiveDayCard.appendChild(pEl);
+            console.log(fiveDayCard);
+            var cardArr = [];
+            cardArr.push(fiveDayCard);
+            if (cardArr.length >= 5) {
+              card.remove(fiveDayCard);
+            }
           }
         });
 
