@@ -18,17 +18,16 @@ var long = "";
 var lat = "";
 var citySave = JSON.parse(localStorage.getItem("city")) || [];
 
-searchForm.addEventListener("submit", searchHandler);
-
 function searchHandler(event) {
   event.preventDefault();
   conditions.textContent = "";
   todayDateEl.textContent = formattedDate;
   citySearch = searchField.value;
   var cityName = event.target.textContent.split(" ")[0].trim();
-
+  var newSearch = false;
   if (cityName === "") {
     cityName = searchField.value;
+    newSearch = true;
   } else {
     cityName = event.target.textContent;
   }
@@ -106,9 +105,11 @@ function searchHandler(event) {
           }
         });
 
-      citySave.push(citySearch);
-      console.log(citySave);
-      localStorage.setItem("city", JSON.stringify(citySave));
+      if (newSearch) {
+        citySave.push(citySearch);
+        console.log(citySave);
+        localStorage.setItem("city", JSON.stringify(citySave));
+      }
     });
 }
 
@@ -116,6 +117,7 @@ var ulBtn = document.getElementById("city-btn");
 
 function showCity() {
   var cityList = JSON.parse(localStorage.getItem("city"));
+  console.log(cityList);
   for (var i = 0; i < cityList.length; i++) {
     var searchedCity = document.createElement("button");
 
@@ -128,7 +130,7 @@ function showCity() {
     searchEl.addEventListener("click", searchHandler);
   }
 }
-
+searchForm.addEventListener("submit", searchHandler);
 function init() {
   showCity();
 }
