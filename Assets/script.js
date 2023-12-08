@@ -148,7 +148,6 @@ function showCity() {
       searchedCity.textContent = cityName;
       var history = "history-btn" + i;
       searchedCity.setAttribute("id", history);
-      history.classList.add("mxy2");
       ulBtn.appendChild(searchedCity);
 
       var searchEl = document.getElementById(history);
