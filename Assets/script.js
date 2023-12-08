@@ -17,6 +17,7 @@ var todayDateEl = document.getElementById("todayDate");
 var long = "";
 var lat = "";
 var citySave = JSON.parse(localStorage.getItem("city")) || [];
+var cityList = document.getElementById("city-btn");
 
 function searchHandler(event) {
   event.preventDefault();
@@ -133,23 +134,38 @@ function searchHandler(event) {
     });
 }
 
-var ulBtn = document.getElementById("city-btn");
-
 function showCity() {
   var cityList = JSON.parse(localStorage.getItem("city"));
   console.log(cityList);
+
+  var ulBtn = document.getElementById("city-btn");
+
   for (var i = 0; i < cityList.length; i++) {
-    var searchedCity = document.createElement("button");
+    var cityName = cityList[i];
 
-    searchedCity.textContent = cityList[i];
-    var history = "history-btn" + i;
-    searchedCity.setAttribute("id", history);
+    if (!isCityInList(cityName, ulBtn)) {
+      var searchedCity = document.createElement("button");
+      searchedCity.textContent = cityName;
+      var history = "history-btn" + i;
+      searchedCity.setAttribute("id", history);
+      history.classList.add("mxy2");
+      ulBtn.appendChild(searchedCity);
 
-    ulBtn.appendChild(searchedCity);
-    var searchEl = document.getElementById(history);
-    searchEl.addEventListener("click", searchHandler);
+      var searchEl = document.getElementById(history);
+      searchEl.addEventListener("click", searchHandler);
+    }
   }
 }
+function isCityInList(cityName, cityList) {
+  var existingButtons = cityList.getElementsByTagName("button");
+  for (var i = 0; i < existingButtons.length; i++) {
+    if (existingButtons[i].textContent === cityName) {
+      return true;
+    }
+  }
+  return false;
+}
+
 searchForm.addEventListener("submit", searchHandler);
 function init() {
   showCity();
