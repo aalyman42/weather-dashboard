@@ -130,6 +130,7 @@ function searchHandler(event) {
         citySave.push(citySearch);
         console.log(citySave);
         localStorage.setItem("city", JSON.stringify(citySave));
+        showCity();
       }
     });
 }
